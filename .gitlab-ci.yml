@@ -22,18 +22,41 @@ before_script:
 
 stages:
   - test
+  - coverage
   - build
   - deploy
 
 format:
   stage: test
-  before_script:
-    - go get -u github.com/jstemmer/go-junit-report
   script:
     - go fmt $(go list ./... | grep -v /vendor/)
     - go vet $(go list ./... | grep -v /vendor/)
+
+unit-test:
+  stage: test
+  script:
     - go test -race $(go list ./... | grep -v /vendor/)
+
+test-coverage-report:
+  stage: coverage
+  coverage: /regular total:\s+\(statements\)\s+\d+.\d+\%/
+  script:
+    - go tool cover -func .coverage.cov
+    - go tool cover -html=.coverage.cov -o public/coverage.html
+  artifacts:
+    paths:
+    - public/coverage.html
+
+test-junit-report:
+  stage: coverage
+  before_script:
+    - go get -u github.com/jstemmer/go-junit-report
+  script:
     - go test -v $(go list ./... | grep -v /vendor/) 2>&1 | go-junit-report -set-exit-code > report.xml
+  artifacts:
+    reports:
+      junit: report.xml
+
 
 compile:
   stage: build

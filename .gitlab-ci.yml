@@ -36,9 +36,11 @@ unit-test:
   stage: test
   script:
     - go test -race $(go list ./... | grep -v /vendor/)
+    - go test -coverprofile=coverage.cov $(go list ./... | grep -v /vendor/)
 
 test-coverage-report:
   stage: coverage
+  needs: ["unit-test"]
   coverage: /regular total:\s+\(statements\)\s+\d+.\d+\%/
   script:
     - go tool cover -func .coverage.cov

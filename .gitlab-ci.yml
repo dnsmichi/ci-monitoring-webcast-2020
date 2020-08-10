@@ -37,6 +37,9 @@ unit-test:
   script:
     - go test -race $(go list ./... | grep -v /vendor/)
     - go test -coverprofile=.coverage.cov $(go list ./... | grep -v /vendor/)
+  artifacts:
+    paths:
+    - .coverage.cov
 
 test-coverage-report:
   stage: coverage

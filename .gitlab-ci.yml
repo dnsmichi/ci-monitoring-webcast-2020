@@ -70,6 +70,8 @@ test-junit-report:
 pages-report:
   stage: report
   needs: ["test-coverage-report"]
+  before_script:
+    - apt-get update && apt-get -y install tree
   script:
     - echo "Deploying coverage reports to pages"
     - tree ./public -H '.' -T "$title" -I "reveal*|img*|style*|index*|content*" --noreport --charset utf-8 > ./public/index.html

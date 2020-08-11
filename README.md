@@ -1,2 +1,5 @@
-# ci-monitoring-webcast-2020
+# 🦊 Identify, analyze, action! Deep monitoring with CI
+
+- Webcast Registration and Archive - TODO
+- Slides - TODO
 

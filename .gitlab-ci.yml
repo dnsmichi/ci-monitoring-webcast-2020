@@ -40,7 +40,8 @@ unit-test:
   stage: test
   script:
     - go test -race $(go list ./... | grep -v /vendor/)
-    - go test -coverprofile=.coverage.cov $(go list ./... | grep -v /vendor/)
+    - go test -cover $(go list ./... | grep -v /vendor/) # this generates the coverage report to STDOUT + regex project setting
+    - go test -coverprofile=.coverage.cov $(go list ./... | grep -v /vendor/) # this generates the output for the 'test-coverage-report' job
   artifacts:
     paths:
     - .coverage.cov
@@ -60,6 +61,7 @@ test-coverage-report:
 
 test-junit-report:
   stage: coverage
+  needs: ["unit-test"]
   before_script:
     - go get -u github.com/jstemmer/go-junit-report
   script:

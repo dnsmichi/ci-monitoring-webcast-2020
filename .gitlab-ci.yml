@@ -23,6 +23,7 @@ before_script:
 stages:
   - test
   - coverage
+  - report
   - build
   - deploy
 
@@ -45,12 +46,14 @@ test-coverage-report:
   stage: coverage
   needs: ["unit-test"]
   coverage: /regular total:\s+\(statements\)\s+\d+.\d+\%/
+  variables:
+    COV_FILENAME: coverage-$CI_COMMIT_BRANCH-job-$CI_JOB_ID.html
   script:
     - go tool cover -func .coverage.cov
-    - go tool cover -html=.coverage.cov -o public/coverage.html
+    - go tool cover -html=.coverage.cov -o public/$(echo $COV_FILENAME | sed -e 's/\//___/g') # replace slashes in branch names
   artifacts:
     paths:
-    - public/coverage.html
+    - public/coverage*.html
 
 test-junit-report:
   stage: coverage
@@ -64,6 +67,17 @@ test-junit-report:
     reports:
       junit: report.xml
 
+pages-report:
+  stage: report
+  needs: ["test-coverage-report"]
+  before_script:
+    - apt-get update && apt-get -y install tree
+  script:
+    - echo "Deploying coverage reports to pages"
+    - tree ./public -H '.' -T "$title" -I "reveal*|img*|style*|index*|content*" --noreport --charset utf-8 > ./public/index.html
+  artifacts:
+    paths:
+    - public
 
 compile:
   stage: build

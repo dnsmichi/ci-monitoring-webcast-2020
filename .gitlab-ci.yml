@@ -23,6 +23,7 @@ before_script:
 stages:
   - test
   - coverage
+  - report
   - build
   - deploy
 
@@ -47,10 +48,10 @@ test-coverage-report:
   coverage: /regular total:\s+\(statements\)\s+\d+.\d+\%/
   script:
     - go tool cover -func .coverage.cov
-    - go tool cover -html=.coverage.cov -o public/coverage.html
+    - go tool cover -html=.coverage.cov -o public/coverage-$CI_COMMIT_BRANCH-job-$CI_JOB_ID.html
   artifacts:
     paths:
-    - public/coverage.html
+    - public/coverage*.html
 
 test-junit-report:
   stage: coverage
@@ -64,6 +65,15 @@ test-junit-report:
     reports:
       junit: report.xml
 
+pages-report:
+  stage: report
+  needs: ["test-coverage-report"]
+  script:
+    - echo "Deploying coverage reports to pages"
+    - tree ./public -H '.' -T "$title" -I "reveal*|img*|style*|index*|content*" --noreport --charset utf-8 > ./public/index.html
+  artifacts:
+    paths:
+    - public
 
 compile:
   stage: build

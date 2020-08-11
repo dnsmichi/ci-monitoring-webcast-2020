@@ -95,4 +95,13 @@ compile:
 run:
   stage: deploy
   script:
-    - ./$BINARY_NAME       
+    - ./$BINARY_NAME   
+
+# Web server will be started, but running into a job timeout. - EXERCISE to fix, with a deployment or docker-compose
+run-server:
+  stage: deploy
+  timeout: 120
+  variables:
+    - HTTP_PORT: 8080
+  script:        
+    - ./$BINARY_NAME 

@@ -102,6 +102,6 @@ run-server:
   stage: deploy
   timeout: 120
   variables:
-    - HTTP_PORT: 8080
+    HTTP_PORT: 8080
   script:        
     - ./$BINARY_NAME 

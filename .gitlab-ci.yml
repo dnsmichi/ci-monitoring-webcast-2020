@@ -49,7 +49,6 @@ unit-test:
 test-coverage-report:
   stage: coverage
   needs: ["unit-test"]
-  coverage: /regular total:\s+\(statements\)\s+\d+.\d+\%/
   variables:
     COV_FILENAME: coverage-$CI_COMMIT_BRANCH-job-$CI_JOB_ID.html
   script:

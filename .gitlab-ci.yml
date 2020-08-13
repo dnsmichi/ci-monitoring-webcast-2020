@@ -72,7 +72,7 @@ test-junit-report:
     reports:
       junit: report.xml
 
-pages-report:
+pages:
   stage: report
   needs: ["test-coverage-report"]
   before_script:

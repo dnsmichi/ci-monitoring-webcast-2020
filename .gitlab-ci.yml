@@ -95,6 +95,7 @@ compile:
       - $BINARY_NAME
 
 run:
+  needs: ["compile"]
   stage: deploy
   script:
     - ./$BINARY_NAME       

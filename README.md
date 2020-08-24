@@ -1,7 +1,14 @@
 # 🦊 Identify, analyze, action! Deep monitoring with CI
 
-- Webcast Registration and Archive - TODO
-- Slides - TODO
+- [Webcast Registration and Archive](https://page.gitlab.com/deep-monitoring-ci.html)
+- [Slides](https://docs.google.com/presentation/d/1ONwIIzRB7GWX-WOSziIIv8fz1ngqv77HO1yVfRooOHM/edit?usp=sharing)
+
+## Resources
+
+- [GitLab CI Pipelines Exporter for Prometheus](https://github.com/mvisonneau/gitlab-ci-pipelines-exporter)
+- [Performance Monitoring](https://docs.gitlab.com/ee/administration/monitoring/performance/)
+- [GitLab.com Monitoring](https://about.gitlab.com/handbook/engineering/monitoring/)
+
 
 ## Features
 

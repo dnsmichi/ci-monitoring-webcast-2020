@@ -24,6 +24,7 @@ before_script:
   - cd $GOPATH/src/$REPO_NAME
 
 stages:
+  - format
   - test
   - coverage
   - report
@@ -31,13 +32,14 @@ stages:
   - deploy
 
 format:
-  stage: test
+  stage: format
   script:
     - go fmt $(go list ./... | grep -v /vendor/)
     - go vet $(go list ./... | grep -v /vendor/)
 
 unit-test:
   stage: test
+  needs: ["format"]
   script:
     - go test -race $(go list ./... | grep -v /vendor/)
     - go test -cover $(go list ./... | grep -v /vendor/) # this generates the coverage report to STDOUT + regex project setting
@@ -85,6 +87,7 @@ pages:
 
 compile:
   stage: build
+  needs: ["unit-test"]
   script:
     - go build -race -ldflags "-extldflags '-static'" -o $CI_PROJECT_DIR/$BINARY_NAME
   artifacts:
@@ -92,6 +95,7 @@ compile:
       - $BINARY_NAME
 
 run:
+  needs: ["compile"]
   stage: deploy
   script:
     - ./$BINARY_NAME       

@@ -1,9 +1,9 @@
 package main
-
+/*
 import (
 	"fmt"
 	"os"
-)
+)*/
 
 func main() {
 	hello_from := os.Getenv("HELLO_FROM")

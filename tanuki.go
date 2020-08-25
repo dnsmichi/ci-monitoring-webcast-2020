@@ -1,8 +1,8 @@
 package main
-
+/*
 import (
   "fmt"
-)
+)*/
 
 func Color(colorString string) func(...interface{}) string {
   sprint := func(args ...interface{}) string {

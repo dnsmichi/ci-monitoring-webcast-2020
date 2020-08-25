@@ -48,6 +48,10 @@ unit-test:
     paths:
     - .coverage.cov
 
+# Override included job template
+code_quality:
+  needs: ["format"]
+
 test-coverage-report:
   stage: coverage
   needs: ["unit-test"]

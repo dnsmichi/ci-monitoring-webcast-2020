@@ -21,4 +21,6 @@ func main() {
 
 	fmt.Println("");
 	fmt.Println("Join us at https://www.everyonecancontribute.com")
+
+	fmt.Println("Save me, save me")
 }

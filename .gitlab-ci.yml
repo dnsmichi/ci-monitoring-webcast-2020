@@ -40,6 +40,7 @@ format:
 unit-test:
   stage: test
   needs: ["format"]
+  coverage: '/\d+.\d+% of statements/'
   script:
     - go test -race $(go list ./... | grep -v /vendor/)
     - go test -cover $(go list ./... | grep -v /vendor/) # this generates the coverage report to STDOUT + regex project setting
@@ -68,7 +69,7 @@ test-junit-report:
   stage: coverage
   needs: ["unit-test"]
   before_script:
-    - go get -u github.com/jstemmer/go-junit-report
+    - go install github.com/jstemmer/go-junit-report@latest
   script:
     - go test -v
     - go test -v 2>&1 | go-junit-report
